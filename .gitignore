@@ -1,0 +1,17 @@
+.nodenv
+.pyenv
+.rbenv
+coc
+configstore
+fish
+gcloud
+gh
+git
+github-copilot
+iterm2
+karabiner
+lazygit
+yarn
+zsh-abbr
+
+zsh/.zsh_history
