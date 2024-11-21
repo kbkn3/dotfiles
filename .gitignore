@@ -15,6 +15,12 @@ karabiner
 lazygit
 yarn
 zsh-abbr
+flutter
+crossnote
+.wrangler
+
+# iOSSettings
+tool_state
 
 # 社内情報を含むファイル
 homes-*

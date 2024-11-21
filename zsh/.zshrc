@@ -1,6 +1,11 @@
 # alias
 alias ls='ls -F --color=auto'
 
+# .zshrc更新したら自動でコンパイルする
+if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
+  zcompile ~/.zshrc
+fi
+
 # setting
 # 新規ファイル作成時のパーミッション
 umask 022
@@ -40,6 +45,12 @@ antigen apply
 # starship
 eval "$(starship init zsh)"
 
+# mise
+if type mise &>/dev/null; then
+  eval "$(mise activate zsh)"
+  eval "$(mise activate --shims)"
+fi
+
 # 端末ごとの設定を読み込み
 # ホスト名を取得
 local host_name="$(hostname)"
@@ -49,3 +60,4 @@ host_conf="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/conf.d/hosts/${host_name}.zsh"
 if [ -f "$host_conf" ]; then
     source "$host_conf"
 fi
+
