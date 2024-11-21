@@ -1,6 +1,8 @@
+*.pem
 .nodenv
 .pyenv
 .rbenv
+anyenv
 coc
 configstore
 fish
@@ -14,4 +16,14 @@ lazygit
 yarn
 zsh-abbr
 
+# 社内情報を含むファイル
+homes-*
+lh-*
+exp-library
+wireshark
+
 zsh/.zsh_history
+zsh/.zsh_sessions
+
+# 端末固有の設定ファイル
+zsh/conf.d/hosts/*.zsh

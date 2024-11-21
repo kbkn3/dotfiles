@@ -31,7 +31,12 @@ config.color_scheme = "nord"
 config.window_background_opacity = 0.93
 config.macos_window_background_blur = 20
 -- font
-config.font = require("wezterm").font("HackGen Console NF")
+config.font = require("wezterm").font_with_fallback {
+  'HackGen35 Console NF',
+  'ヒラギノ角ゴシック',
+  'Symbols Nerd Font',
+  'Apple Color Emoji',
+ }
 config.font_size = 13.0
 config.window_frame = {
   font = wezterm.font { family ='Roboto', weight = 'Bold' },

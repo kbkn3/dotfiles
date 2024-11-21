@@ -39,3 +39,13 @@ antigen apply
 
 # starship
 eval "$(starship init zsh)"
+
+# 端末ごとの設定を読み込み
+# ホスト名を取得
+local host_name="$(hostname)"
+
+# ホスト固有の設定ファイルが存在する場合は読み込む
+host_conf="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/conf.d/hosts/${host_name}.zsh"
+if [ -f "$host_conf" ]; then
+    source "$host_conf"
+fi
