@@ -21,6 +21,11 @@ crossnote
 
 # iOSSettings
 tool_state
+swiftpm
+
+# AndroidSettings
+.android
+settings
 
 # 社内情報を含むファイル
 homes-*
