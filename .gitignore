@@ -1,40 +1,18 @@
-*.pem
-.nodenv
-.pyenv
-.rbenv
-anyenv
-coc
-configstore
-fish
-gcloud
-gh
-git
-github-copilot
-iterm2
-karabiner
-lazygit
-yarn
-zsh-abbr
-flutter
-crossnote
-.wrangler
+# 全てのファイルを一旦無視
+*
 
-# iOSSettings
-tool_state
-swiftpm
+# 以下に指定されているファイルやディレクトリをホワイトリストに追加
 
-# AndroidSettings
-.android
-settings
+# ホワイトリストに追加するファイルやディレクトリ
+!.gitignore
+!starship.toml
+!wezterm/
+!wezterm/**/*.lua
+!karabiner/karabiner.json
+!zsh
 
-# 社内情報を含むファイル
-homes-*
-lh-*
-exp-library
-wireshark
-
+# ブラックリスト
 zsh/.zsh_history
 zsh/.zsh_sessions
-
 # 端末固有の設定ファイル
 zsh/conf.d/hosts/*.zsh

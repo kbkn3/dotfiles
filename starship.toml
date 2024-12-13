@@ -1,7 +1,6 @@
 "$schema" = 'https://starship.rs/config-schema.json'
-scan_timeout = 500
+scan_timeout = 50000
 command_timeout = 10000
-
 
 format = """
 [░▒▓](#a3aed2)\
