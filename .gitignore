@@ -10,6 +10,7 @@
 !wezterm/**/*.lua
 !karabiner/karabiner.json
 !zsh
+!aws_sso.zsh
 
 # ブラックリスト
 zsh/.zsh_history
