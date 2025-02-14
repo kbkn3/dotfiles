@@ -10,7 +10,8 @@
 !wezterm/**/*.lua
 !karabiner/karabiner.json
 !zsh
-!aws_sso.zsh
+!aws_sso_switch
+!aws_sso_switch/*
 
 # ブラックリスト
 zsh/.zsh_history
