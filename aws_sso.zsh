@@ -14,7 +14,7 @@ aws-sso-switch - AWS SSO プロファイル切り替えツール
 
 使用方法:
     aws-sso-switch [options] [profile-name]
-    awsp [options] [profile-name]  # エイリアス
+    ass [options] [profile-name]  # エイリアス
 
 オプション:
     -h, --help     このヘルプメッセージを表示
@@ -216,7 +216,7 @@ _aws_sso_switch_completion() {
 compdef _aws_sso_switch_completion aws-sso-switch
 
 # エイリアスの設定
-alias awsp='aws-sso-switch'
+alias ass='aws-sso-switch'
 
 # AWS認証の自動チェック関数
 auto_check_aws_login() {
