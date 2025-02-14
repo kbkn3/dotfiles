@@ -10,10 +10,10 @@ DEBUG_MODE=false
 # ヘルプメッセージ
 show_help() {
     cat << EOF
-aws-profile - AWS プロファイル切り替えツール
+aws-sso-switch - AWS SSO プロファイル切り替えツール
 
 使用方法:
-    aws-profile [options] [profile-name]
+    aws-sso-switch [options] [profile-name]
     awsp [options] [profile-name]  # エイリアス
 
 オプション:
@@ -43,14 +43,14 @@ aws-profile - AWS プロファイル切り替えツール
 
 例:
     # インタラクティブ選択（pecoが必要）
-    $ aws-profile
+    $ aws-sso-switch
 
     # プロファイルを直接指定
-    $ aws-profile dev-account
+    $ aws-sso-switch dev-account
     $ awsp prod-account
 
     # デバッグモードを有効化
-    $ aws-profile --debug dev-account
+    $ aws-sso-switch --debug dev-account
 EOF
 }
 
@@ -140,7 +140,7 @@ select_profile_with_peco() {
 }
 
 # AWS プロファイル切り替え関数
-aws-profile() {
+aws-sso-switch() {
     # オプション解析
     while [[ $# -gt 0 ]]; do
         case $1 in
@@ -205,7 +205,7 @@ aws-profile() {
 }
 
 # プロファイル補完機能
-_aws_profile_completion() {
+_aws_sso_switch_completion() {
     local curr_word=$words[CURRENT]
     local profiles
     profiles=( $(aws configure list-profiles 2>/dev/null) )
@@ -213,10 +213,10 @@ _aws_profile_completion() {
 }
 
 # 補完を有効化
-compdef _aws_profile_completion aws-profile
+compdef _aws_sso_switch_completion aws-sso-switch
 
 # エイリアスの設定
-alias awsp='aws-profile'
+alias awsp='aws-sso-switch'
 
 # AWS認証の自動チェック関数
 auto_check_aws_login() {
@@ -250,7 +250,7 @@ disable_debug() {
 auto_check_aws_login
 
 # Ctrl+PでAWSプロファイル選択を行う関数
-aws-profile-widget() {
+aws-sso-switch-widget() {
     # 現在のバッファを保存
     local BUFFER_BACKUP=$BUFFER
     local CURSOR_BACKUP=$CURSOR
@@ -260,7 +260,7 @@ aws-profile-widget() {
         # pecoがある場合は選択実行
         local selected_profile=$(aws configure list-profiles | peco --prompt="Select AWS Profile>" --initial-index=0)
         if [[ -n "$selected_profile" ]]; then
-            BUFFER="aws-profile $selected_profile"
+            BUFFER="aws-sso-switch $selected_profile"
             zle accept-line
         else
             # 選択がキャンセルされた場合は元のバッファを復元
@@ -275,7 +275,7 @@ aws-profile-widget() {
 }
 
 # ウィジェットを作成
-zle -N aws-profile-widget
+zle -N aws-sso-switch-widget
 
 # Ctrl+Pにバインド
-bindkey '^P' aws-profile-widget
+bindkey '^P' aws-sso-switch-widget
