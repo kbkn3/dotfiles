@@ -61,6 +61,11 @@ symbol = ""
 style = "bg:#212736"
 format = '[[ $symbol ($version) ](fg:#769ff0 bg:#212736)]($style)'
 
+[python]
+symbol = '👾 '
+pyenv_version_name = true
+pyenvversionname = true
+
 [time]
 disabled = false
 time_format = "%R" # Hour:Minute Format
