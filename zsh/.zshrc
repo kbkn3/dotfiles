@@ -16,7 +16,7 @@ limit coredumpsize 0
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # antigen
-source $HOME/.local/bin/antigen.zsh
+source "${HOME}/.config/zsh/antigen.zsh"
 
 # Load the oh-my-zsh's library
 # antigen use oh-my-zsh
