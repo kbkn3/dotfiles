@@ -3,6 +3,8 @@
 # 必要なディレクトリを作成
 mkdir -p "${HOME}/.config/zsh"
 mkdir -p "${HOME}/.config/.bin"
+mkdir -p "${HOME}/.config/wezterm"
+mkdir -p "${HOME}/.config/zsh/conf.d/hosts"
 
 # dotfilesのディレクトリ
 DOTFILES_DIR=$(cd "$(dirname "$0")" && pwd)
@@ -47,6 +49,16 @@ create_symlink "${DOTFILES_DIR}/zsh/.zshrc" "${HOME}/.config/zsh/.zshrc"
 # 4. antigen.zshのシンボリックリンクを作成
 create_symlink "${DOTFILES_DIR}/zsh/antigen.zsh" "${HOME}/.config/zsh/antigen.zsh"
 
+# ローカル設定ファイルの作成
+LOCAL_CONF_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/conf.d/hosts/local.zsh"
+if [ ! -e "$LOCAL_CONF_PATH" ]; then
+  echo "ローカル設定ファイルを作成します: $LOCAL_CONF_PATH"
+  touch "$LOCAL_CONF_PATH"
+  echo "# ローカル固有の設定をここに記述してください" > "$LOCAL_CONF_PATH"
+  echo "# このファイルはgitで管理されません" >> "$LOCAL_CONF_PATH"
+  chmod +x "$LOCAL_CONF_PATH"
+fi
+
 # 履歴ファイル用のディレクトリ確認
 if [ ! -e "${HOME}/.config/zsh/.zsh_history" ]; then
   echo "履歴ファイルを作成します: ${HOME}/.config/zsh/.zsh_history"
@@ -69,5 +81,35 @@ if [ -d "$bin_src_dir" ]; then
 else
   echo "警告: .binディレクトリが存在しません。スクリプトのリンクはスキップします。"
 fi
+
+# Weztermの設定ファイルの対応
+if [ -d "${DOTFILES_DIR}/wezterm" ]; then
+  echo "=== Weztermの設定ファイルを配置します ==="
+  
+  # 方法1: ディレクトリ全体をシンボリックリンクする場合
+  if [ -e "${HOME}/.config/wezterm" ]; then
+    echo "既に存在します: ${HOME}/.config/wezterm"
+    read -p "バックアップを作成して上書きしますか? (y/n) " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      echo "バックアップを作成: ${HOME}/.config/wezterm.backup"
+      mv "${HOME}/.config/wezterm" "${HOME}/.config/wezterm.backup"
+      ln -sf "${DOTFILES_DIR}/wezterm" "${HOME}/.config/wezterm"
+      echo "ディレクトリをリンク: ${DOTFILES_DIR}/wezterm -> ${HOME}/.config/wezterm"
+    fi
+  else
+    ln -sf "${DOTFILES_DIR}/wezterm" "${HOME}/.config/wezterm"
+    echo "ディレクトリをリンク: ${DOTFILES_DIR}/wezterm -> ${HOME}/.config/wezterm"
+  fi
+  
+  # 方法2: ファイルをコピーする場合（上記の方法1を使用する場合はコメントアウト）
+  # echo "Weztermの設定ファイルをコピーします"
+  # cp -r "${DOTFILES_DIR}/wezterm/"* "${HOME}/.config/wezterm/"
+else
+  echo "警告: weztermディレクトリが存在しません。設定ファイルの設定はスキップします。"
+fi
+
+# Starshipの設定ファイルのシンボリックリンクを作成
+create_symlink "${DOTFILES_DIR}/starship.toml" "${HOME}/.config/starship.toml"
 
 echo "インストールが完了しました！"

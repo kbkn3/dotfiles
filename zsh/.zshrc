@@ -2,8 +2,8 @@
 alias ls='ls -F --color=auto'
 
 # .zshrc更新したら自動でコンパイルする
-if [ ~/.zshrc -nt ~/.zshrc.zwc ]; then
-  zcompile ~/.zshrc
+if [ "$ZDOTDIR/.zshrc" -nt "$ZDOTDIR/.zshrc.zwc" ]; then
+  zcompile "$ZDOTDIR/.zshrc"
 fi
 
 # setting
