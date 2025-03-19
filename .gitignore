@@ -1,17 +1,21 @@
-# 全てのファイルを一旦無視
-*
+# 最初にすべての階層のファイルを無視します
+# 階層は必要なだけ追加する
+### all ignore ###
+/*
+/.**
 
 # 以下に指定されているファイルやディレクトリをホワイトリストに追加
 
 # ホワイトリストに追加するファイルやディレクトリ
 !.gitignore
+!install.sh
+!/.bin/
+!/.bin/**
 !starship.toml
 !wezterm/
 !wezterm/**/*.lua
 !karabiner/karabiner.json
 !zsh
-!aws_sso_switch
-!aws_sso_switch/*
 
 # ブラックリスト
 zsh/.zsh_history
