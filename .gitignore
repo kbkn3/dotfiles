@@ -16,6 +16,7 @@
 !wezterm/**/*.lua
 !karabiner/karabiner.json
 !zsh
+!.Brewfile
 
 # ブラックリスト
 zsh/.zsh_history
