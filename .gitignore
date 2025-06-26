@@ -23,3 +23,4 @@ zsh/.zsh_history
 zsh/.zsh_sessions
 # 端末固有の設定ファイル
 zsh/conf.d/hosts/*.zsh
+zsh/conf.d/hosts/*.zshenv

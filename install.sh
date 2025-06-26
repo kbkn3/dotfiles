@@ -49,7 +49,12 @@ create_symlink "${DOTFILES_DIR}/zsh/.zshrc" "${HOME}/.config/zsh/.zshrc"
 # 4. antigen.zshのシンボリックリンクを作成
 create_symlink "${DOTFILES_DIR}/zsh/antigen.zsh" "${HOME}/.config/zsh/antigen.zsh"
 
+# 5. ホスト固有設定ファイルのシンボリックリンクを作成
+create_symlink "${DOTFILES_DIR}/zsh/conf.d/hosts/local.zsh" "${HOME}/.config/zsh/conf.d/hosts/local.zsh"
+create_symlink "${DOTFILES_DIR}/zsh/conf.d/hosts/local.zshenv" "${HOME}/.config/zsh/conf.d/hosts/local.zshenv"
+
 # ローカル設定ファイルの作成
+# local.zsh (すべてのシェル起動時に読み込まれる設定)
 LOCAL_CONF_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/conf.d/hosts/local.zsh"
 if [ ! -e "$LOCAL_CONF_PATH" ]; then
   echo "ローカル設定ファイルを作成します: $LOCAL_CONF_PATH"
@@ -57,6 +62,16 @@ if [ ! -e "$LOCAL_CONF_PATH" ]; then
   echo "# ローカル固有の設定をここに記述してください" > "$LOCAL_CONF_PATH"
   echo "# このファイルはgitで管理されません" >> "$LOCAL_CONF_PATH"
   chmod +x "$LOCAL_CONF_PATH"
+fi
+
+# local.zshenv (環境変数とログインシェル設定)
+LOCAL_ENV_PATH="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/conf.d/hosts/local.zshenv"
+if [ ! -e "$LOCAL_ENV_PATH" ]; then
+  echo "ローカル環境変数ファイルを作成します: $LOCAL_ENV_PATH"
+  touch "$LOCAL_ENV_PATH"
+  echo "# ローカル固有の環境変数をここに記述してください" > "$LOCAL_ENV_PATH"
+  echo "# このファイルはgitで管理されません" >> "$LOCAL_ENV_PATH"
+  chmod +x "$LOCAL_ENV_PATH"
 fi
 
 # 履歴ファイル用のディレクトリ確認

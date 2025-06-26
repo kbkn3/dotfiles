@@ -61,3 +61,10 @@ setopt no_beep
 # ファイル種別起動を補完候補の末尾に表示しない
 unsetopt list_types
 export _ANTIGEN_INSTALL_DIR=${HOME}/.local/bin
+
+# 端末ごとの環境変数設定を読み込み
+# ローカル環境変数ファイルが存在する場合は読み込む
+local_env_conf="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/conf.d/hosts/local.zshenv"
+if [ -f "$local_env_conf" ]; then
+  source "$local_env_conf"
+fi

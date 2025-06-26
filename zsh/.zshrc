@@ -1,3 +1,5 @@
+# Amazon Q pre block. Keep at the top of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.pre.zsh"
 # alias
 alias ls='ls -F --color=auto'
 
@@ -55,12 +57,9 @@ fi
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
 # 端末ごとの設定を読み込み
-# ホスト名を取得
-local host_name="$(hostname)"
-
 # ローカル設定ファイルが存在する場合は読み込む
 local_conf="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/conf.d/hosts/local.zsh"
-if [ -f "$local_conf" ]; then
-  source "$local_conf"
-fi
+[[ -f "$local_conf" ]] && source "$local_conf"
 
+# Amazon Q post block. Keep at the bottom of this file.
+[[ -f "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/amazon-q/shell/zshrc.post.zsh"
