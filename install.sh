@@ -5,6 +5,7 @@ mkdir -p "${HOME}/.config/zsh"
 mkdir -p "${HOME}/.config/.bin"
 mkdir -p "${HOME}/.config/wezterm"
 mkdir -p "${HOME}/.config/zsh/conf.d/hosts"
+mkdir -p "${HOME}/.local/state/zsh"
 
 # dotfilesのディレクトリ
 DOTFILES_DIR=$(cd "$(dirname "$0")" && pwd)
@@ -74,10 +75,18 @@ if [ ! -e "$LOCAL_ENV_PATH" ]; then
   chmod +x "$LOCAL_ENV_PATH"
 fi
 
-# 履歴ファイル用のディレクトリ確認
-if [ ! -e "${HOME}/.config/zsh/.zsh_history" ]; then
-  echo "履歴ファイルを作成します: ${HOME}/.config/zsh/.zsh_history"
-  touch "${HOME}/.config/zsh/.zsh_history"
+# 旧履歴ファイルが存在し、新パスに未移行なら移行
+OLD_HISTFILE="${HOME}/.config/zsh/.zsh_history"
+NEW_HISTFILE="${HOME}/.local/state/zsh/history"
+if [ -f "$OLD_HISTFILE" ] && [ ! -e "$NEW_HISTFILE" ]; then
+  echo "履歴ファイルを移行します: ${OLD_HISTFILE} -> ${NEW_HISTFILE}"
+  cp "$OLD_HISTFILE" "$NEW_HISTFILE"
+fi
+
+# 履歴ファイルが存在しなければ作成
+if [ ! -e "$NEW_HISTFILE" ]; then
+  echo "履歴ファイルを作成します: ${NEW_HISTFILE}"
+  touch "$NEW_HISTFILE"
 fi
 
 # .binディレクトリからシェルスクリプトのシンボリックリンクを作成
@@ -122,6 +131,20 @@ if [ -d "${DOTFILES_DIR}/wezterm" ]; then
   # cp -r "${DOTFILES_DIR}/wezterm/"* "${HOME}/.config/wezterm/"
 else
   echo "警告: weztermディレクトリが存在しません。設定ファイルの設定はスキップします。"
+fi
+
+# Ghosttyの設定ファイルの対応
+if [ -d "${DOTFILES_DIR}/ghostty" ]; then
+  echo "=== Ghosttyの設定ファイルを配置します ==="
+
+  ghostty_dst="${HOME}/Library/Application Support/com.mitchellh.ghostty"
+  mkdir -p "$ghostty_dst"
+
+  for config_file in "${DOTFILES_DIR}/ghostty/"*; do
+    [ -f "$config_file" ] || continue
+    config_name=$(basename "$config_file")
+    create_symlink "$config_file" "${ghostty_dst}/${config_name}"
+  done
 fi
 
 # Starshipの設定ファイルのシンボリックリンクを作成
