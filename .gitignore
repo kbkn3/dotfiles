@@ -1,28 +1,14 @@
-# 最初にすべての階層のファイルを無視します
-# 階層は必要なだけ追加する
-### all ignore ###
-/*
-/.**
+# === macOS / IDE ===
+.DS_Store
+.vscode/
+.idea/
 
-# 以下に指定されているファイルやディレクトリをホワイトリストに追加
+# === 大型バイナリ・ドキュメント（git 管理対象外） ===
+HackGen35ConsoleNF-Regular.ttf
+CLAUDE.md
 
-# ホワイトリストに追加するファイルやディレクトリ
-!.gitignore
-!install.sh
-!/.bin/
-!/.bin/**
-!starship.toml
-!wezterm/
-!wezterm/**/*.lua
-!ghostty/
-!ghostty/config
-!karabiner/karabiner.json
-!zsh
-!.Brewfile
-
-# ブラックリスト
-zsh/.zsh_history
-zsh/.zsh_sessions
-# 端末固有の設定ファイル
-zsh/conf.d/hosts/*.zsh
-zsh/conf.d/hosts/*.zshenv
+# === chezmoi 管理対象外（ホスト固有のローカル設定） ===
+zsh/conf.d/hosts/local.zsh
+zsh/conf.d/hosts/local.zshenv
+dot_config/zsh/conf.d/hosts/local.zsh
+dot_config/zsh/conf.d/hosts/local.zshenv

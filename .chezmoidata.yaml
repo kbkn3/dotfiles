@@ -1,0 +1,19 @@
+homebrew:
+  casks:
+    shared:
+      - wezterm
+      - ghostty
+      - google-chrome
+      - karabiner-elements
+      - mos
+    work:
+      - cursor
+      - slack
+      - notion
+      - google-japanese-ime
+      - visual-studio-code
+    personal: []
+  masApps:
+    shared: []
+    work: []
+    personal: []
