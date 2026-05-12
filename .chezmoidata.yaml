@@ -2,14 +2,14 @@ homebrew:
   casks:
     shared:
       - wezterm
-      - google-chrome
       - karabiner-elements
       - mos
       - font-symbols-only-nerd-font
       - discord
+    # 情シス配布で入る MDM 管理対象は Brewfile に含めない:
+    #   google-chrome, slack
     work:
       - cursor
-      - slack
       - notion
       - google-japanese-ime
       - visual-studio-code
