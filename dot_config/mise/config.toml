@@ -1,0 +1,11 @@
+[tools]
+bun = "latest"
+"github:trasta298/keifu" = "latest"
+go = "1.24.4"
+node = "24"
+"npm:pnpm" = "10.13.1"
+python = "3.11"
+uv = "0.9.24"
+
+[settings]
+idiomatic_version_file_enable_tools = ["node"]
