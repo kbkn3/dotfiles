@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Homebrew が無ければインストールする。
+# run_once_ : chezmoi が state DB に実行履歴を記録、再実行されない
+# before_   : 通常のファイル展開より前に実行
+# 00-       : 他のスクリプトより先に実行されるための番号
+#
+# {{- if eq .chezmoi.os "darwin" }}
+
+set -euo pipefail
+
+if command -v brew >/dev/null 2>&1; then
+  echo "Homebrew already installed; skipping."
+  exit 0
+fi
+
+echo "==> Installing Homebrew"
+NONINTERACTIVE=1 /bin/bash -c \
+  "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# このスクリプトのプロセスにも PATH を通す（同 chezmoi apply 内の後続スクリプトで brew を呼ぶため）
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+# {{- end }}
