@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Xcode Command Line Tools の存在チェック。
+# macOS では git / cc / make 等が CLT に含まれる。
+# 未導入だと chezmoi の git clone も Homebrew インストールも動かない。
+#
+# 自動インストールしない理由:
+#   xcode-select --install は GUI ダイアログを開いて人間の操作を待つ。
+#   chezmoi apply のフロー中に待たせるのは UX が悪いので、ガイドだけ出して exit 1。
+#
+# {{- if eq .chezmoi.os "darwin" }}
+
+set -euo pipefail
+
+if xcode-select -p >/dev/null 2>&1; then
+  exit 0
+fi
+
+cat <<'MSG'
+
+==> Xcode Command Line Tools が未導入です。
+
+    以下を実行してから chezmoi の init を再実行してください:
+
+      xcode-select --install
+
+    GUI ダイアログが開きます。インストールに 5-10 分かかります。
+    完了後:
+
+      rm -rf ~/.local/share/chezmoi
+      sh -c "$(curl -fsLS get.chezmoi.io)" -- -b $HOME/.local/bin init --apply kbkn3/dotfiles --branch chezmoi
+
+MSG
+exit 1
+# {{- end }}
