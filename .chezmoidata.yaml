@@ -2,18 +2,21 @@ homebrew:
   casks:
     shared:
       - wezterm
-      - ghostty
       - google-chrome
       - karabiner-elements
       - mos
+      - font-symbols-only-nerd-font
     work:
       - cursor
       - slack
       - notion
       - google-japanese-ime
       - visual-studio-code
-    personal: []
-  masApps:
-    shared: []
-    work: []
-    personal: []
+      - rancher
+      - codex
+      - 1password-cli
+      - wireshark-app
+      - xcodes
+      - xcodes-app
+    personal:
+      - discord

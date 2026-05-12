@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Brewfile.tmpl または .chezmoidata.yaml が変わったら brew bundle を実行する。
+# 下記コメントのハッシュが変更検知のトリガー（chezmoi が onchange を判定する）。
+#
+# Brewfile.tmpl   sha256: {{ include "Brewfile.tmpl"   | sha256sum }}
+# chezmoidata     sha256: {{ include ".chezmoidata.yaml" | sha256sum }}
+
+set -euo pipefail
+
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Homebrew is not installed. Run the following first, then re-apply:"
+  echo '  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"'
+  exit 0
+fi
+
+BREWFILE="$(mktemp -t chezmoi-brewfile.XXXXXX)"
+trap 'rm -f "$BREWFILE"' EXIT
+
+# Brewfile.tmpl を chezmoi のテンプレート機能で展開
+chezmoi execute-template < "{{ .chezmoi.sourceDir }}/Brewfile.tmpl" > "$BREWFILE"
+
+echo "==> brew bundle install --file=<expanded Brewfile>"
+brew bundle install --file="$BREWFILE"
+
+# 不要パッケージ削除は破壊的なので自動実行しない。必要なら手動で:
+#   brew bundle cleanup --file=<(chezmoi execute-template < ~/.local/share/chezmoi/Brewfile.tmpl) --force
