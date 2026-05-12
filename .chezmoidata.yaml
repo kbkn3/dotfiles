@@ -6,6 +6,7 @@ homebrew:
       - karabiner-elements
       - mos
       - font-symbols-only-nerd-font
+      - discord
     work:
       - cursor
       - slack
@@ -16,7 +17,5 @@ homebrew:
       - codex
       - 1password-cli
       - wireshark-app
-      - xcodes
       - xcodes-app
-    personal:
-      - discord
+    personal: []
