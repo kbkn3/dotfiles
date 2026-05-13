@@ -1,0 +1,108 @@
+{{/*
+chezmoi が source 内に保持する Brewfile テンプレート。
+.chezmoiscripts/run_onchange_after_01-brew-bundle.sh.tmpl から chezmoi
+execute-template で展開し brew bundle に渡す。
+内容は `brew bundle dump --force` の出力を正としてメンテする。
+*/ -}}
+tap "derailed/k9s"
+tap "rbenv/tap"
+
+# === CLI (brew) ===
+brew "act"
+brew "actionlint"
+brew "aria2"
+brew "autoconf"
+brew "automake"
+brew "awscli"
+brew "bat"
+brew "bison"
+brew "chezmoi"
+brew "cocoapods"
+brew "derailed/k9s/k9s"
+brew "direnv"
+brew "docker-compose"
+brew "dust"
+brew "eza"
+brew "fd"
+brew "ffmpeg"
+brew "ffmpeg-full"
+brew "freetype"
+brew "fzf"
+brew "gd"
+brew "gemini-cli"
+brew "gettext"
+brew "ghq"
+brew "gh"
+brew "git"
+brew "git-secrets"
+brew "gnupg"
+brew "icu4c@76"
+brew "imagemagick"
+brew "imagemagick-full"
+brew "jpeg"
+brew "jq"
+brew "just"
+brew "k6"
+brew "krb5"
+brew "kubernetes-cli"
+brew "libedit"
+brew "libiconv"
+brew "libxml2"
+brew "libyaml"
+brew "libzip"
+brew "mise"
+brew "mkcert"
+brew "node"
+brew "openjdk"
+brew "openssl@3"
+brew "peco"
+brew "php"
+brew "pkgconf"
+brew "poppler"
+brew "python@3.13"
+brew "rbenv/tap/openssl@1.1"
+brew "re2c"
+# 変更時にサービスを再起動
+brew "redis", restart_service: :changed
+brew "resvg"
+brew "ripgrep"
+brew "ruby"
+brew "sevenzip"
+brew "shellcheck"
+brew "starship"
+brew "tesseract"
+brew "tidy-html5"
+brew "tldr"
+brew "yazi"
+brew "zlib"
+brew "zoxide"
+
+# === GUI: shared ===
+{{- range .homebrew.casks.shared }}
+cask "{{ . }}"
+{{- end }}
+
+{{- if eq .profile "work" }}
+
+# === GUI: work ===
+{{- range .homebrew.casks.work }}
+cask "{{ . }}"
+{{- end }}
+{{- end }}
+
+{{- if eq .profile "personal" }}
+
+# === GUI: personal ===
+{{- range .homebrew.casks.personal }}
+cask "{{ . }}"
+{{- end }}
+{{- end }}
+
+# === 未対応（保留） ===
+# brew bundle dump には下記も含まれていたが現時点では Brewfile.tmpl で管理しない:
+#   - vscode "..." (VSCode extensions): 社内 SSL inspection によって
+#     code --install-extension が "self signed certificate in certificate chain"
+#     で失敗するため。NODE_EXTRA_CA_CERTS で社内 CA を渡せば動くはずだが、
+#     設定が固まるまで一旦除外。必要なら `brew bundle dump --force` で復元できる。
+#   - go "..." / npm "corepack": go install / npm i -g 系。
+#     mise や devbox 等の別ツールで管理する方向で別途検討する。

@@ -4,5 +4,5 @@ export XDG_CACHE_HOME=${HOME}/.cache
 export XDG_DATA_HOME=${HOME}/.local/share
 export XDG_STATE_HOME=${HOME}/.local/state
 
-# Set ZDOTDIR to redirect other zsh config files
+# zsh の他の設定ファイルは ZDOTDIR 配下から読む
 export ZDOTDIR=${XDG_CONFIG_HOME}/zsh

@@ -1,0 +1,24 @@
+homebrew:
+  casks:
+    shared:
+      - wezterm
+      - ghostty
+      - karabiner-elements
+      - mos
+      - font-symbols-only-nerd-font
+      # HackGen の全バリエーション（HackGen35ConsoleNF を含む）。ghostty/config が参照
+      - font-hackgen-nerd
+      - discord
+    # 情シス配布で入る MDM 管理対象は Brewfile に含めない:
+    #   google-chrome, slack
+    work:
+      - cursor
+      - notion
+      - google-japanese-ime
+      - visual-studio-code
+      - rancher
+      - codex
+      - 1password-cli
+      - wireshark-app
+      - xcodes-app
+    personal: []

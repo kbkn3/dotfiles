@@ -21,8 +21,27 @@ setopt list_packed
 setopt no_beep
 unsetopt list_types
 
-# alias
-alias ls='ls -F --color=auto'
+# === alias: modern CLI tools ===
+# eza があれば ls 系を上書き
+if (( $+commands[eza] )); then
+  alias ls='eza --icons --git'
+  alias ll='eza --icons --git -l'
+  alias la='eza --icons --git -la'
+  alias lt='eza --icons --git --tree --level=2'
+else
+  alias ls='ls -F --color=auto'
+fi
+
+# bat があれば cat を上書き（pager は無効化、less は通常通り）
+if (( $+commands[bat] )); then
+  alias cat='bat --paging=never'
+  export BAT_THEME='ansi'
+fi
+
+# dust があれば du を上書き
+if (( $+commands[dust] )); then
+  alias du='dust'
+fi
 
 # .zshrc更新したら自動でコンパイルする
 if [ "$ZDOTDIR/.zshrc" -nt "$ZDOTDIR/.zshrc.zwc" ]; then
@@ -54,8 +73,6 @@ antigen bundles <<EOBUNDLES
     zsh-users/zsh-autosuggestions
     # Extra zsh completions
     zsh-users/zsh-completions
-    # z
-    rupa/z z.sh
     # abbr
     olets/zsh-abbr@main
 EOBUNDLES
@@ -72,8 +89,16 @@ if type mise &>/dev/null; then
   eval "$(mise activate --shims)"
 fi
 
+# zoxide で cd を置き換え（履歴ベースの fuzzy ジャンプ。`cd substring` で過去訪問先へ）
+if (( $+commands[zoxide] )); then
+  eval "$(zoxide init zsh --cmd cd)"
+fi
+
 # coreutils
 export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+
+# ワークフロー関数を読み込み（fgc / fgl / fga / fkill / port / pro 等）
+[[ -f "${HOME}/.custom/functions.sh" ]] && source "${HOME}/.custom/functions.sh"
 
 # 端末ごとの設定を読み込み
 # ローカル設定ファイルが存在する場合は読み込む

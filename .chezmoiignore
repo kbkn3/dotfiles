@@ -1,0 +1,30 @@
+{{/*
+chezmoi 管理対象から除外するファイル群。
+- main ブランチ由来の旧構造はすべて除外（chezmoi 規約に従わない名前なので展開もされないが、明示する）
+- OS / profile 別の分岐もここで管理
+*/ -}}
+
+# === 旧 dotfiles 構造（chezmoi化に伴い段階的に削除予定） ===
+.Brewfile
+HackGen35ConsoleNF-Regular.ttf
+install.sh
+starship.toml
+CLAUDE.md
+.bin
+.claude
+ghostty
+wezterm
+zsh
+
+# === chezmoi自身のメタ ===
+README.md
+
+{{- if ne .chezmoi.os "darwin" }}
+# === macOS 専用ファイル（Linux等では除外） ===
+Brewfile
+Library
+{{- end }}
+
+{{- if ne .profile "personal" }}
+# === personal profile 専用 ===
+{{- end }}

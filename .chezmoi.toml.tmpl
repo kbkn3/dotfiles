@@ -1,0 +1,20 @@
+{{/*
+chezmoi init 時に対話で値を聞き、~/.config/chezmoi/chezmoi.toml に保存する。
+2回目以降の init では保存された値が使われ、同じ質問は再度されない（promptStringOnce / promptChoiceOnce）。
+*/ -}}
+
+{{- $profile := promptChoiceOnce . "profile" "Profile (work or personal)" (list "work" "personal") -}}
+{{- $name := promptStringOnce . "name" "Git user.name" "kbkn3" -}}
+{{- $email := "" -}}
+{{- if eq $profile "work" -}}
+{{-   $email = promptStringOnce . "email" "Git user.email" "" -}}
+{{- else -}}
+{{-   $email = promptStringOnce . "email" "Git user.email" "" -}}
+{{- end -}}
+{{- $hostname := promptStringOnce . "hostname" "Hostname (空でOK、ホスト固有設定を分けたいときに使う)" "" -}}
+
+[data]
+    profile = {{ $profile | quote }}
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    hostname = {{ $hostname | quote }}
