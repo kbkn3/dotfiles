@@ -25,7 +25,8 @@ curl -fsSL -o "$dmg" \
   https://github.com/manaflow-ai/cmux/releases/latest/download/cmux-macos.dmg
 
 echo "==> Mounting DMG"
-mountpoint=$(hdiutil attach "$dmg" -nobrowse -quiet \
+# -quiet を付けると標準出力が抑制されて mountpoint が拾えないので付けない。
+mountpoint=$(hdiutil attach "$dmg" -nobrowse \
   | awk -F'\t' '/\/Volumes\// {print $NF; exit}')
 
 if [ -z "$mountpoint" ] || [ ! -d "$mountpoint/cmux.app" ]; then
