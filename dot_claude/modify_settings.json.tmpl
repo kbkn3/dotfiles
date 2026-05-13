@@ -1,0 +1,31 @@
+#!/bin/sh
+# Claude Code は feedbackSurveyState など一部フィールドを自走で書き換える。
+# chezmoi 管理対象のフィールドだけ強制し、その他のフィールドは既存値を保持する。
+existing=$(cat)
+[ -z "$existing" ] && existing='{}'
+
+exec jq -n --argjson existing "$existing" '
+  $existing
+  + {
+      "$schema": "https://json.schemastore.org/claude-code-settings.json",
+      includeCoAuthoredBy: false,
+      permissions: { defaultMode: "auto" },
+      hooks: { Stop: [ { matcher: "", hooks: [] } ] },
+      statusLine: { type: "command", command: "~/.claude/statusline.py" },
+      enabledPlugins: {
+        "gopls-lsp@claude-plugins-official": true,
+        "typescript-lsp@claude-plugins-official": true,
+        "slack@claude-plugins-official": true,
+        "playwright@claude-plugins-official": true,
+        "github@claude-plugins-official": true,
+        "code-review@claude-plugins-official": true,
+        "skill-creator@claude-plugins-official": true,
+        "chrome-devtools-mcp@claude-plugins-official": true,
+        "frontend-design@claude-plugins-official": true,
+        "superpowers@claude-plugins-official": true
+      },
+      alwaysThinkingEnabled: true,
+      preferredNotifChannel: "terminal_bell",
+      skipAutoPermissionPrompt: true
+    }
+'

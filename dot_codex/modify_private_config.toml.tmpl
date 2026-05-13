@@ -1,0 +1,51 @@
+#!/bin/sh
+# Codex は cd 時に [projects.*] を、起動時に [tui.model_availability_nux] を
+# 自走で書き換える。chezmoi 管理対象のフィールドだけ強制し、それらの動的
+# セクションは既存ファイルからそのまま引き継ぐ。
+existing=$(cat)
+
+cat <<'STATIC_EOF'
+model = "gpt-5.5"
+model_reasoning_effort = "medium"
+hide_agent_reasoning = true
+network_access = true
+personality = "pragmatic"
+web_search = "live"
+
+[mcp_servers.github]
+url = "https://api.githubcopilot.com/mcp"
+bearer_token_env_var = "GITHUB_TOKEN"
+
+[mcp_servers.github.tools.create_pull_request]
+approval_mode = "approve"
+
+[mcp_servers.github.tools.update_pull_request]
+approval_mode = "approve"
+
+# [mcp_servers.context7] は API key を含むため chezmoi 管理外。
+# 必要に応じて apply 後に手動で ~/.codex/config.toml に追記する。
+
+[notice]
+hide_rate_limit_model_nudge = true
+
+[notice.model_migrations]
+gpt-5-codex = "gpt-5.2-codex"
+"gpt-5.2-codex" = "gpt-5.3-codex"
+"gpt-5.3-codex" = "gpt-5.4"
+
+[features]
+multi_agent = true
+
+[plugins."github@openai-curated"]
+enabled = true
+
+[plugins."superpowers@openai-curated"]
+enabled = true
+STATIC_EOF
+
+# 既存ファイルから [projects.*] と [tui.*] のセクションだけ抽出して引き継ぐ。
+# 次に [ で始まる別セクションが現れたら停止する。
+printf '%s\n' "$existing" | awk '
+  /^\[/ { keep = ($0 ~ /^\[(projects|tui)\./) ? 1 : 0; if (keep && !started) { print ""; started=1 } }
+  keep { print }
+'

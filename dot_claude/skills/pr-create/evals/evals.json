@@ -1,0 +1,26 @@
+{
+  "skill_name": "pr-create",
+  "evals": [
+    {
+      "id": 0,
+      "name": "rich-japanese-template",
+      "prompt": "このブランチでPR作成して。実際に gh pr create を実行する代わりに、生成したタイトルと body を `OUTPUT_DIR/pr.json` に {\"title\": string, \"body\": string} の形で保存してください。",
+      "repo_path": "/Users/202204012/.claude/skills/pr-create-workspace/fixtures/repo-with-rich-template",
+      "assertions": []
+    },
+    {
+      "id": 1,
+      "name": "no-template-default",
+      "prompt": "このブランチで pull request を作ってください。実際に gh pr create を実行する代わりに、生成したタイトルと body を `OUTPUT_DIR/pr.json` に {\"title\": string, \"body\": string} の形で保存してください。",
+      "repo_path": "/Users/202204012/.claude/skills/pr-create-workspace/fixtures/repo-no-template",
+      "assertions": []
+    },
+    {
+      "id": 2,
+      "name": "english-template-with-checkboxes",
+      "prompt": "Please open a PR for the current branch. Instead of actually running `gh pr create`, save the generated title and body to `OUTPUT_DIR/pr.json` as {\"title\": string, \"body\": string}.",
+      "repo_path": "/Users/202204012/.claude/skills/pr-create-workspace/fixtures/repo-with-checkboxes-and-issues",
+      "assertions": []
+    }
+  ]
+}

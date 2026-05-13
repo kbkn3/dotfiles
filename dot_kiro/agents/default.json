@@ -1,0 +1,19 @@
+{
+  "name": "default",
+  "description": "",
+  "prompt": null,
+  "mcpServers": {},
+  "tools": [
+    "*"
+  ],
+  "toolAliases": {},
+  "allowedTools": [],
+  "resources": [
+    "file://AGENTS.md",
+    "file://README.md"
+  ],
+  "hooks": {},
+  "toolsSettings": {},
+  "useLegacyMcpJson": true,
+  "model": null
+}

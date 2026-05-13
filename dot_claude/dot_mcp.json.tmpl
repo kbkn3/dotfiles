@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+{{- if eq .profile "work" }}
+    "confluence": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://lifull-mcps.tls-termination.k8s.dev.nxin.jp/confluence/mcp",
+        "--transport",
+        "sse",
+        "--header",
+        "Authorization: Bearer ${CONFLUENCE_PERSONAL_ACCESS_TOKEN}"
+      ],
+      "timeout": 60000
+    }
+{{- end }}
+  }
+}
