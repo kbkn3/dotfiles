@@ -105,6 +105,9 @@ export PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 local_conf="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/conf.d/hosts/local.zsh"
 [[ -f "$local_conf" ]] && source "$local_conf"
 
+# cmux app が提供する shell 関数 (worktree + AI agent ランチャー)
+[[ -f "${HOME}/.cmux/cmux.sh" ]] && source "${HOME}/.cmux/cmux.sh"
+
 
 
 # Kiro CLI post block. Keep at the bottom of this file.
