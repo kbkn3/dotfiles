@@ -4,6 +4,7 @@ chezmoi が source 内に保持する Brewfile テンプレート。
 execute-template で展開し brew bundle に渡す。
 内容は `brew bundle dump --force` の出力を正としてメンテする。
 */ -}}
+tap "coderabbitai/tap"
 tap "derailed/k9s"
 tap "rbenv/tap"
 
@@ -18,6 +19,7 @@ brew "bat"
 brew "bison"
 brew "chezmoi"
 brew "cocoapods"
+brew "coderabbitai/tap/git-gtr"
 brew "derailed/k9s/k9s"
 brew "direnv"
 brew "docker-compose"
