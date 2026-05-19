@@ -14,7 +14,9 @@ homebrew:
     work:
       - cursor
       - notion
-      - google-japanese-ime
+      # google-japanese-ime: .pkg インストーラが root を要求し、非対話の
+      #   chezmoi apply (brew bundle) が失敗するため除外。必要なら手動で
+      #   `brew install --cask google-japanese-ime` で導入する。
       - visual-studio-code
       - rancher
       - codex
