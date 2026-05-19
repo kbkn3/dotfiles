@@ -43,11 +43,6 @@ if (( $+commands[dust] )); then
   alias du='dust'
 fi
 
-# .zshrc更新したら自動でコンパイルする
-if [ "$ZDOTDIR/.zshrc" -nt "$ZDOTDIR/.zshrc.zwc" ]; then
-  zcompile "$ZDOTDIR/.zshrc"
-fi
-
 # setting
 # 新規ファイル作成時のパーミッション
 umask 022
@@ -108,7 +103,12 @@ local_conf="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/conf.d/hosts/local.zsh"
 # cmux app が提供する shell 関数 (worktree + AI agent ランチャー)
 [[ -f "${HOME}/.cmux/cmux.sh" ]] && source "${HOME}/.cmux/cmux.sh"
 
+{{- if eq .profile "work" }}
 
+# AWS SSO プロファイル切り替え（aws-sso-switch / ass / Ctrl+P）
+[[ -f "${HOME}/.local/bin/aws_sso_switch.zsh" ]] && source "${HOME}/.local/bin/aws_sso_switch.zsh"
+{{- end }}
 
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+export PATH="$HOME/.local/bin:$PATH"
