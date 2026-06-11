@@ -1,8 +1,17 @@
 
+{{- if eq .profile "work" }}
 # Kiro CLI pre block. Keep at the top of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.pre.zsh"
+{{- end }}
 
 # history
+# /etc/zshrc が HISTFILE/HISTSIZE/SAVEHIST を上書きするため、最後に読まれる
+# ここで設定して上書きを取り戻す。HISTFILE の親ディレクトリは zsh が自動生成
+# しないので用意する。
+HISTFILE="${XDG_STATE_HOME:-$HOME/.local/state}/zsh/history"
+HISTSIZE=1000
+SAVEHIST=100000
+[[ -d "${HISTFILE:h}" ]] || mkdir -p "${HISTFILE:h}"
 setopt hist_ignore_dups
 setopt EXTENDED_HISTORY
 setopt hist_ignore_all_dups
@@ -109,6 +118,8 @@ local_conf="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/conf.d/hosts/local.zsh"
 [[ -f "${HOME}/.local/bin/aws_sso_switch.zsh" ]] && source "${HOME}/.local/bin/aws_sso_switch.zsh"
 {{- end }}
 
+{{- if eq .profile "work" }}
 # Kiro CLI post block. Keep at the bottom of this file.
 [[ -f "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh" ]] && builtin source "${HOME}/Library/Application Support/kiro-cli/shell/zshrc.post.zsh"
+{{- end }}
 export PATH="$HOME/.local/bin:$PATH"

@@ -1,3 +1,12 @@
+# XDG Base Directory
+# /etc/zshenv が ZDOTDIR を先に設定する環境では ~/.zshenv が読まれず、この
+# ファイルが実効 zshenv になる。その場合 ~/.zshenv 側の XDG 定義は効かないため、
+# 下の HISTFILE 等が依存する XDG 変数はここでも定義しておく必要がある。
+export XDG_CONFIG_HOME=${HOME}/.config
+export XDG_CACHE_HOME=${HOME}/.cache
+export XDG_DATA_HOME=${HOME}/.local/share
+export XDG_STATE_HOME=${HOME}/.local/state
+
 # path
 export PATH=${HOME}/.local/bin:$PATH
 export PATH="/usr/local/sbin:$PATH"
@@ -14,10 +23,9 @@ export CVSEDITOR="${EDITOR}"
 export SVN_EDITOR="${EDITOR}"
 export GIT_EDITOR="${EDITOR}"
 
-# history
-export HISTFILE=${XDG_STATE_HOME}/zsh/history
-export HISTSIZE=1000
-export SAVEHIST=100000
+# history の HISTFILE/HISTSIZE/SAVEHIST は .zshrc 側で定義する。
+# zshenv で設定しても後続の /etc/zshrc が上書きしてしまうため、最後に読まれる
+# .zshrc で設定しないとリポジトリの値が反映されない。
 
 # 端末ごとの環境変数設定を読み込み
 # ローカル環境変数ファイルが存在する場合は読み込む
